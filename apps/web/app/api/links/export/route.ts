@@ -43,26 +43,27 @@ export const GET = withWorkspace(
 
     const links = await prisma.link.findMany({
       select: {
-        id: columns.includes("id"),
-        domain: columns.includes("link"),
-        key: columns.includes("link"),
-        url: columns.includes("url"),
-        clicks: columns.includes("clicks"),
-        createdAt: columns.includes("createdAt"),
-        updatedAt: columns.includes("updatedAt"),
-        ...(columns.includes("tags") && {
-          tags: {
-            select: {
-              tag: {
-                select: {
-                  name: true,
-                },
-              },
-            },
+  id: columns.includes("id"),
+  domain: true, // Always include domain
+  key: true,    // Always include key
+  url: columns.includes("url"),
+  clicks: columns.includes("clicks"),
+  createdAt: columns.includes("createdAt"),
+  updatedAt: columns.includes("updatedAt"),
+  ...(columns.includes("tags") && {
+    tags: {
+      select: {
+        tag: {
+          select: {
+            name: true,
           },
-        }),
-        archived: columns.includes("archived"),
+        },
       },
+    },
+  }),
+  archived: columns.includes("archived"),
+},
+
       where: {
         projectId: workspace.id,
         archived: showArchived ? undefined : false,
