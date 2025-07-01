@@ -205,6 +205,7 @@ export const linksExportQuerySchema = getLinksQuerySchemaBase
         .describe("The end date of creation to retrieve links from.")
         .optional(),
       interval: z.string().optional().describe("The interval for the export."),
+      domain: z.string().optional().describe("Optional domain filter."),
     }),
   );
 
