@@ -26,7 +26,7 @@ export const GET = withWorkspace(
       interval,
       columns,
       folderId,
-    } = linksExportQuerySchema.parse(searchParams);
+    } = parsedParams as z.infer<typeof linksExportQuerySchema> & { domain?: string };
 
     if (domain) {
       await getDomainOrThrow({ workspace, domain });
